@@ -1,5 +1,5 @@
 import { IResevation } from './../../../interfaces/models/reservation';
-import { IReservationsState } from './../../../interfaces/store/reservations-interface';
+import { IReservationsState } from '../../../interfaces/store/states-interfaces';
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState: IReservationsState = {

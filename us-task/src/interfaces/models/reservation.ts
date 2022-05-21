@@ -1,6 +1,8 @@
-
+export interface IMeal {
+    label: string
+}
 export interface IResevation {
-    first: string | null,
-    main: string | null,
-    desert: string | null
+    first: IMeal | null,
+    main: IMeal | null,
+    desert: IMeal | null
 }

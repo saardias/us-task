@@ -1,16 +1,18 @@
-# Getting Started with Create React App
+# US Task
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Cloning and Running the Application in local
 
-## Available Scripts
+Clone the project into local
 
-In the project directory, you can run:
+Install all the npm packages for the app. Go into the project folder and type the following commands to install all npm packages
 
-### `npm start`
+```bash
+npm install
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+In order to run the app type the following command in the client directory
 
+```bash
+npm run start
+```

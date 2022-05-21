@@ -3,8 +3,9 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import { IDropdownProps } from '../../interfaces/components/ui';
 
-const Dropdown = (props: IDropdownProps) => {
+const Dropdown = <T,>(props: IDropdownProps<T>) => {
     const {
+        label,
         options,
         value,
         setValue
@@ -19,7 +20,7 @@ const Dropdown = (props: IDropdownProps) => {
                 setValue(value)
             }}
             sx={{ width: 300 }}
-            renderInput={(params) => <TextField {...params} label="First" />}
+            renderInput={(params) => <TextField {...params} label={label || 'title'} />}
         />
     )
 }

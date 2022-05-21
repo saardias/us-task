@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
-import { Typography, Container, useTheme, Divider } from '@mui/material';
+import { Typography, Container, useTheme, Divider, Button } from '@mui/material';
 
-import Dropdown from '../ui/Dropdown';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
+import { addNewOrder } from '../../store/features/reservations/reservations-slice';
 import PageContainer from '../hoc/PageContainer';
-import { IMeal } from '../../interfaces/models/reservation';
+import Order from './Order';
 
 const Reservations = () => {
-    const [meal, setMeal] = useState<IMeal | null>(null);
     const theme = useTheme();
+    const dispatch = useAppDispatch()
+    const reservations = useAppSelector(state => state.reservations)
 
+    const onAddMealClicked = () => {
+        dispatch(addNewOrder());
+    }
     return (
         <PageContainer>
             <Container >
@@ -16,12 +21,30 @@ const Reservations = () => {
                     Dinner Reservation
                 </Typography>
                 <Divider variant={'middle'} />
+                {
+                    reservations.orders.map((order, index) => {
+                        return (
+                            <Order
+                                key={order.id}
+                                reseration={order}
+                                guestNumber={index + 1} />
+                        )
+                    })
+                }
 
-                {/* <Dropdown
-                    options={firstMeals}
-                    value={meal}
-                    setValue={setMeal}
-                /> */}
+                {
+                    reservations.orders.length === 0 ||
+                        (
+                            reservations.orders[reservations.orders.length - 1] &&
+                            reservations.orders[reservations.orders.length - 1].first &&
+                            reservations.orders[reservations.orders.length - 1].main &&
+                            reservations.orders[reservations.orders.length - 1].desert
+                        ) ?
+                        <Button onClick={onAddMealClicked}>
+                            Add Meal
+                        </Button>
+                        : null
+                }
 
             </Container>
         </PageContainer>
@@ -29,20 +52,3 @@ const Reservations = () => {
 }
 
 export default Reservations;
-
-const firstMeals = [
-    { label: 'Green salad' },
-    { label: 'Soup' },
-    { label: 'Crispy Garlic Dip' },
-    { label: 'Sausage Balls' },
-    { label: 'Bagel-Spiced Cheese Puffs' },
-    { label: 'Baked Vegetable Egg Rolls' },
-    { label: 'Stuffed Grape Leaves' },
-    { label: 'Mushroom Puffs' },
-    { label: 'Curly Fries' },
-    { label: 'Carnitas Egg Rolls' },
-    { label: 'Coconut Curry Puffs' },
-    { label: 'Tzatziki Sauce' },
-    { label: 'Reggiano Cups' },
-    { label: 'Crab Cakesup' }
-];

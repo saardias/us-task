@@ -1,10 +1,7 @@
 
-interface DropdownOption {
-    label: string,
-    [key: string]: any;
-}
-export interface IDropdownProps {
-    options: DropdownOption[],
-    value: DropdownOption | null,
-    setValue: Function
+export interface IDropdownProps<T> {
+    label?: string,
+    options: T[],
+    value: T | null,
+    setValue: (value: T | null) => void
 }

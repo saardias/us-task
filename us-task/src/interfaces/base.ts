@@ -8,3 +8,7 @@ export interface IBaseState {
     loading: boolean;
     error: IError | null;
 }
+
+export interface IUnique {
+    id: string;
+}

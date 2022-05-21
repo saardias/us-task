@@ -8,7 +8,7 @@ const sleep = async (ms: number) => {
 }
 
 const mockFetchLists = async (): Promise<{ status: number, data: any, error?: any }> => {
-    await sleep(5000);
+    await sleep(3000);
     return {
         status: 200,
         data: {

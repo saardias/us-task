@@ -17,7 +17,7 @@ const Reservations = () => {
     const [mealLits, setMealLists] = useState<IMealLists>({ first: [], main: [], desert: [] })
 
     useEffect(() => {
-        if (!reservations.listsLoaded) {
+        if (!reservations.listsLoaded && !reservations.loading) {
             dispatch(getMealLists()).then(({ payload }) => {
                 if (!payload.error) {
                     setMealLists(payload.mealLists)
@@ -26,7 +26,7 @@ const Reservations = () => {
         } else {
             setMealLists(reservations.lists)
         }
-    }, [dispatch, reservations.lists, reservations.listsLoaded, reservations.loading]);
+    }, []);
 
     const onAddMealClicked = () => {
         dispatch(addNewOrder());

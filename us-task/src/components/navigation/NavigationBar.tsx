@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
     AppBar,
     IconButton,
@@ -10,13 +10,15 @@ import DinnerDiningIcon from '@mui/icons-material/DinnerDining';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 
-import Routes from "../../routes";
+import { MainRoutesArray } from "../../routes";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import { togglePaletteMode } from "../../store/features/system/system-slice";
+import { ReactElement } from "react";
 
 const NavigationBar = () => {
     const dispatch = useAppDispatch();
     const system = useAppSelector(state => state.system);
+    const location = useLocation();
     const navigate = useNavigate();
 
     const navigateToPage = (path: string) => {
@@ -27,21 +29,22 @@ const NavigationBar = () => {
         dispatch(togglePaletteMode());
     }
 
+    const NavButtons = MainRoutesArray.map((route): ReactElement => (
+        <Button
+            key={route.path}
+            disabled={route.path === location.pathname}
+            onClick={() => { navigateToPage(route.path) }}
+            color={'inherit'}>
+            {route.name}
+        </Button>
+    ));
+
     return (
         <AppBar position='static'>
             <Toolbar>
                 <DinnerDiningIcon />
                 <Stack direction={'row'} spacing={2} sx={{ flexGrow: 1 }}>
-                    <Button
-                        onClick={() => { navigateToPage(Routes.main.home) }}
-                        color={'inherit'}>
-                        Home
-                    </Button>
-                    <Button
-                        onClick={() => { navigateToPage(Routes.main.reservations) }}
-                        color={'inherit'}>
-                        dinner Reservation
-                    </Button>
+                    {NavButtons}
                 </Stack>
                 <IconButton
                     onClick={onColorModeClick}

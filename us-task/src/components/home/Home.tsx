@@ -10,6 +10,7 @@ const Home = () => {
     return (
         <PageContainer>
             <Typography
+                sx={{ padding: '1rem 0' }}
                 align='center'
                 variant='h3'
                 color={theme.palette.text.primary}>

@@ -8,11 +8,11 @@ import Reservations from "../reservations/Reservations";
 const NavigationSwitch = () => {
     return (
         <Switch>
-            <Route path={Routes.main.home} element={<Home />} ></Route>
-            <Route path={Routes.main.reservations} element={<Reservations />} ></Route>
+            <Route path={Routes.main.home.path} element={<Home />} ></Route>
+            <Route path={Routes.main.reservations.path} element={<Reservations />} ></Route>
             <Route
                 path="*"
-                element={<Navigate to={Routes.main.home} replace />}
+                element={<Navigate to={Routes.main.home.path} replace />}
             />
         </Switch>
     )

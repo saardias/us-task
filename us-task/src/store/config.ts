@@ -8,5 +8,5 @@ const store = configureStore({
 })
 
 export type AppDispatch = typeof store.dispatch
-export type AppThunk = ThunkAction<void, RootState, null, Action<string>>
+export type AppThunk = ThunkAction<Promise<any>, RootState, unknown, Action>
 export default store;

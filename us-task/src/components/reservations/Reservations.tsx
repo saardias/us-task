@@ -1,15 +1,32 @@
-import React, { useState } from 'react';
-import { Typography, Container, useTheme, Divider, Button } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Typography, Container, useTheme, CircularProgress, Box } from '@mui/material';
 
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
-import { addNewOrder } from '../../store/features/reservations/reservations-slice';
+import { addNewOrder, getMealLists } from '../../store/features/reservations/reservations-slice';
 import PageContainer from '../hoc/PageContainer';
 import Order from './Order';
+import PrimaryButton from '../ui/Button';
+import Separator from '../ui/Separator';
+import { IMealLists } from '../../interfaces/models/reservation';
+import LoadingIndicator from '../ui/LoadingIndicator';
 
 const Reservations = () => {
     const theme = useTheme();
-    const dispatch = useAppDispatch()
-    const reservations = useAppSelector(state => state.reservations)
+    const dispatch = useAppDispatch();
+    const reservations = useAppSelector(state => state.reservations);
+    const [mealLits, setMealLists] = useState<IMealLists>({ first: [], main: [], desert: [] })
+
+    useEffect(() => {
+        if (!reservations.listsLoaded) {
+            dispatch(getMealLists()).then(({ payload }) => {
+                if (!payload.error) {
+                    setMealLists(payload.mealLists)
+                }
+            })
+        } else {
+            setMealLists(reservations.lists)
+        }
+    }, [dispatch, reservations.lists, reservations.listsLoaded, reservations.loading]);
 
     const onAddMealClicked = () => {
         dispatch(addNewOrder());
@@ -17,35 +34,40 @@ const Reservations = () => {
     return (
         <PageContainer>
             <Container >
-                <Typography align='center' variant='h3' color={theme.palette.text.primary}>
+                <Typography
+                    sx={{ padding: '1rem 0' }}
+                    align='center'
+                    variant='h3'
+                    color={theme.palette.text.primary}>
                     Dinner Reservation
                 </Typography>
-                <Divider variant={'middle'} />
                 {
                     reservations.orders.map((order, index) => {
                         return (
                             <Order
                                 key={order.id}
-                                reseration={order}
+                                mealLists={mealLits}
+                                reservation={order}
                                 guestNumber={index + 1} />
                         )
                     })
                 }
-
-                {
-                    reservations.orders.length === 0 ||
-                        (
-                            reservations.orders[reservations.orders.length - 1] &&
-                            reservations.orders[reservations.orders.length - 1].first &&
-                            reservations.orders[reservations.orders.length - 1].main &&
-                            reservations.orders[reservations.orders.length - 1].desert
-                        ) ?
-                        <Button onClick={onAddMealClicked}>
-                            Add Meal
-                        </Button>
-                        : null
-                }
-
+                <Separator variant={'middle'} />
+                <LoadingIndicator loading={reservations.loading} />
+                <Container sx={{ display: 'flex', justifyContent: 'center', paddingBottom: '10%' }}>
+                    {
+                        !reservations.loading &&
+                            (
+                                reservations.orders.length === 0 ||
+                                reservations.orders[reservations.orders.length - 1]?.ready
+                            )
+                            ?
+                            <PrimaryButton
+                                label={'Add Guest'}
+                                onClick={onAddMealClicked} />
+                            : null
+                    }
+                </Container>
             </Container>
         </PageContainer>
     )

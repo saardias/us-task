@@ -9,7 +9,7 @@ const PageContainer = ({ children }: { children: any; }) => {
     const theme = useTheme();
     const navigate = useNavigate();
     const location = useLocation();
-    console.log('location', location)
+
     return (
         <Container sx={{
             width: '100%',
@@ -17,7 +17,7 @@ const PageContainer = ({ children }: { children: any; }) => {
             backgroundColor: `${theme.palette.background.default}`
         }} maxWidth={false}>
             {
-                location.pathname !== Routes.main.home ?
+                location.pathname !== Routes.main.home.path ?
                     <IconButton
                         onClick={() => { navigate(-1) }}
                         aria-label='back-button'

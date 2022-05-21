@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Typography, Container, useTheme, CircularProgress, Box } from '@mui/material';
+import { Typography, Container, useTheme } from '@mui/material';
 
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { addNewOrder, getMealLists } from '../../store/features/reservations/reservations-slice';

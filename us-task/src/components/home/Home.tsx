@@ -3,7 +3,6 @@ import { Typography, useTheme } from '@mui/material';
 
 import PageContainer from '../hoc/PageContainer';
 
-
 const Home = () => {
     const theme = useTheme();
 

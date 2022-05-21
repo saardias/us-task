@@ -7,7 +7,6 @@ import { useAppDispatch } from '../../hooks/reduxHooks';
 import { removeOrder, setMeal } from '../../store/features/reservations/reservations-slice';
 import PrimaryButton from '../ui/Button';
 
-
 const Order = (props: { reservation: IResevation, guestNumber: number, mealLists: IMealLists }) => {
     const {
         reservation,
